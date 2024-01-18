@@ -109,77 +109,40 @@
                                         </div>
                                     </form>
                                     <div class="single-sidebar-box mt-30 wow fadeInUp animated ">
-                                        <h4>Select Categories</h4>
+                                        <h4>Категории</h4>
                                         <div class="checkbox-item">
                                             <form>
-                                                <div class="form-group"><input type="checkbox" id="bedroom"> <label
-                                                    for="bedroom">Bedroom</label></div>
-                                                <div class="form-group"><input type="checkbox" id="decoration"> <label
-                                                    for="decoration">Decoration</label></div>
-                                                <div class="form-group"><input type="checkbox" id="kitchen"> <label
-                                                    for="kitchen">Kitchen</label></div>
-                                                <div class="form-group"><input type="checkbox" id="clothing"> <label
-                                                    for="clothing">Clothing</label></div>
-                                                <div class="form-group"><input type="checkbox" id="office"> <label
-                                                    for="office">Office</label></div>
-                                                <div class="form-group m-0"><input type="checkbox" id="lighting"> <label
-                                                    for="lighting">Lighting</label></div>
+                                                <div v-for="category in filterList.categories" class="form-group"><input
+                                                    type="checkbox" :id="category.id"> <label
+                                                    :for="category.id">{{ category.title }}</label></div>
                                             </form>
                                         </div>
                                     </div>
                                     <div class="single-sidebar-box mt-30 wow fadeInUp animated">
-                                        <h4>Color Option </h4>
+                                        <h4>Цвета </h4>
                                         <ul class="color-option">
-                                            <li><a href="#0" class="color-option-single"> <span> Black</span> </a></li>
-                                            <li><a href="#0" class="color-option-single bg2"> <span> Yellow</span> </a>
-                                            </li>
-                                            <li><a href="#0" class="color-option-single bg3"> <span> Red</span> </a>
-                                            </li>
-                                            <li><a href="#0" class="color-option-single bg4"> <span> Blue</span> </a>
-                                            </li>
-                                            <li><a href="#0" class="color-option-single bg5"> <span> Green</span> </a>
-                                            </li>
-                                            <li><a href="#0" class="color-option-single bg6"> <span> Olive</span> </a>
-                                            </li>
-                                            <li><a href="#0" class="color-option-single bg7"> <span> Lime</span> </a>
-                                            </li>
-                                            <li><a href="#0" class="color-option-single bg8"> <span> Pink</span> </a>
-                                            </li>
-                                            <li><a href="#0" class="color-option-single bg9"> <span> Cyan</span> </a>
-                                            </li>
-                                            <li><a href="#0" class="color-option-single bg10"> <span> Magenta</span>
-                                            </a>
+                                            <li v-for="color in filterList.colors">
+                                                <a href="#0" class="color-option-single"
+                                                   :style="`background: ${color.title}`"> <span>{{ color.title }}</span>
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="single-sidebar-box mt-30 wow fadeInUp animated">
-                                        <h4>Filter By Price</h4>
+                                        <h4>Фильтр по цене</h4>
                                         <div class="slider-box">
                                             <div id="price-range" class="slider"></div>
-                                            <div class="output-price"><label for="priceRange">Price:</label> <input
+                                            <div class="output-price"><label for="priceRange">Цена:</label> <input
                                                 type="text" id="priceRange" readonly></div>
                                             <button class="filterbtn"
-                                                    type="submit"> Filter
+                                                    type="submit"> Фильтровать
                                             </button>
                                         </div>
                                     </div>
                                     <div class="single-sidebar-box mt-30 wow fadeInUp animated pb-0 border-bottom-0 ">
-                                        <h4>Tags </h4>
+                                        <h4>Тэги </h4>
                                         <ul class="popular-tag">
-                                            <li><a href="#0">Tools</a></li>
-                                            <li><a href="#0">Store</a></li>
-                                            <li><a href="#0">Decoration</a></li>
-                                            <li><a href="#0">Online</a></li>
-                                            <li><a href="#0">Furnitures</a></li>
-                                            <li><a href="#0">Beauty</a></li>
-                                            <li><a href="#0">Fashion</a></li>
-                                            <li><a href="#0">Office</a></li>
-                                            <li><a href="#0">Clothing</a></li>
-                                            <li><a href="#0">Interior</a></li>
-                                            <li><a href="#0">Good</a></li>
-                                            <li><a href="#0">Standard</a></li>
-                                            <li><a href="#0">Chair’s</a></li>
-                                            <li><a href="#0">Living Room</a></li>
+                                            <li v-for="tag in filterList.tags"><a href="#0">{{ tag.title }}</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -265,7 +228,8 @@
                                                                         class="flaticon-left-and-right-arrows"></i>
                                                                         <span>
                                                                             compare</span> </a></li>
-                                                                    <li><a @click="getProduct(product.id)" :href="`#popup${product.id}`"
+                                                                    <li><a @click="getProduct(product.id)"
+                                                                           :href="`#popup${product.id}`"
                                                                            class="popup_link"> <i
                                                                         class="flaticon-visibility"></i>
                                                                         <span> quick view</span>
@@ -279,7 +243,8 @@
                                                                 <div
                                                                     class="row justify-content-between align-items-center">
                                                                     <div class="col-lg-6">
-                                                                        <div class="quick-view__left-content" v-if="popupProduct.product_images.length > 2">
+                                                                        <div class="quick-view__left-content"
+                                                                             v-if="popupProduct.product_images.length > 2">
                                                                             <div class="tabs">
                                                                                 <div class="popup-product-thumb-box">
                                                                                     <ul>
@@ -295,8 +260,10 @@
                                                                                 </div>
                                                                                 <div
                                                                                     class="popup-product-main-image-box">
-                                                                                    <div v-for="productImage in popupProduct.product_images" :id="`tabb${productImage.id}`"
-                                                                                         class="tab-item popup-product-image">
+                                                                                    <div
+                                                                                        v-for="productImage in popupProduct.product_images"
+                                                                                        :id="`tabb${productImage.id}`"
+                                                                                        class="tab-item popup-product-image">
                                                                                         <div
                                                                                             class="popup-product-single-image">
                                                                                             <img
@@ -329,14 +296,19 @@
                                                                                 }}</p>
                                                                             <div class="price">
                                                                                 <h2> ${{ popupProduct.price }} USD
-                                                                                    <del> ${{ popupProduct.old_price }} USD
+                                                                                    <del> ${{ popupProduct.old_price }}
+                                                                                        USD
                                                                                     </del>
                                                                                 </h2>
                                                                                 <h6> In stuck</h6>
                                                                             </div>
                                                                             <div class="color-varient">
-                                                                                <template v-for="groupProduct in popupProduct.group_products">
-                                                                                    <a @click.prevent="getProduct(groupProduct.id)" v-for="color in groupProduct.colors" href="#0" :style="`background: ${color.title};`"
+                                                                                <template
+                                                                                    v-for="groupProduct in popupProduct.group_products">
+                                                                                    <a @click.prevent="getProduct(groupProduct.id)"
+                                                                                       v-for="color in groupProduct.colors"
+                                                                                       href="#0"
+                                                                                       :style="`background: ${color.title};`"
                                                                                        class="color-name">
                                                                                         <span>{{ color.title }}</span>
                                                                                     </a>
@@ -420,7 +392,9 @@
                                                                 </div>
                                                                 <div class="icon">
                                                                     <ul>
-                                                                        <li><a @click="getProduct(product.id)" :href="`#popup${product.id}`" class="popup_link"><i
+                                                                        <li><a @click="getProduct(product.id)"
+                                                                               :href="`#popup${product.id}`"
+                                                                               class="popup_link"><i
                                                                             class="flaticon-eye"></i></a></li>
                                                                         <li><a href="wishlist.html"><i
                                                                             class="flaticon-heart"></i></a></li>
@@ -463,14 +437,16 @@
 export default {
     name: 'Index',
     mounted() {
-        $(document).trigger('change')
+        $(document).trigger('init')
         this.getProducts()
+        this.getFilterList()
     },
 
     data() {
         return {
             products: [],
             popupProduct: null,
+            filterList: [],
         }
     },
 
@@ -482,7 +458,7 @@ export default {
                     console.log(res);
                 })
                 .finally(v => {
-                    $(document).trigger('change')
+                    $(document).trigger('init')
                 })
         },
         getProduct(id) {
@@ -492,7 +468,31 @@ export default {
                     console.log(res);
                 })
                 .finally(v => {
-                    $(document).trigger('change')
+                    $(document).trigger('init')
+                })
+        },
+        getFilterList() {
+            this.axios.get(`http://127.0.0.1:8000/api/products/filters`)
+                .then(res => {
+                    this.filterList = res.data
+
+                    //  Price Filter
+                    if ($("#price-range").length) {
+                        $("#price-range").slider({
+                            range: true,
+                            min: this.filterList.price.min,
+                            max: this.filterList.price.max,
+                            values: [this.filterList.price.min, this.filterList.price.max],
+                            slide: function (event, ui) {
+                                $("#priceRange").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                            }
+                        });
+                        $("#priceRange").val("$" + $("#price-range").slider("values", 0) + " - $" + $("#price-range").slider("values", 1));
+                    }
+
+                })
+                .finally(v => {
+                    $(document).trigger('init')
                 })
         },
     }
